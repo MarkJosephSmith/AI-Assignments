@@ -19,7 +19,7 @@ namespace SteeringNamespace
         private TileNode nextTile;
         private TileNode currentGoalTile;
         private TileNode prevGoalTile;
-
+         
         private Kinematic char_RigidBody;
         private KinematicSteering ks;
         private DynoSteering ds;
