@@ -24,6 +24,7 @@ namespace GoalNamespace
         // Update is called once per frame
         void Update()
         {
+			
             time_since_goal_switch += Time.deltaTime;
 
             if (time_since_goal_switch > goalSwitchTime)
@@ -39,6 +40,12 @@ namespace GoalNamespace
                 goal_script.setGoal(ordered_goals[goal_index]);
                 time_since_goal_switch = 0f;
             }
+            
         }
+
+		void SwitchGoal()
+		{
+			
+		}
     }
 }
