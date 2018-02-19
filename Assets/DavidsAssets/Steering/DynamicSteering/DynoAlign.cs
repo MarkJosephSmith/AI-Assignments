@@ -25,12 +25,16 @@ namespace SteeringNamespace
         private float angularAcceleration;
         //private  rotation;
 
+
+
         // Use this for initialization
         void Start()
         {
             goalObject = GetComponent<Goal>();
             sp = GetComponent<SteeringParams>();
             charRigidBody = GetComponent<Kinematic>();
+
+
         }
 
         //public virtual DynoSteering getSteering();

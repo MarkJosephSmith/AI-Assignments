@@ -20,6 +20,11 @@ namespace SteeringNamespace
         private DynoSteering ds_force;
         private DynoSteering ds_torque;
 
+		/*record and write out speed on timer*/
+		private float StartTime;
+		private string FileName;
+		/*END record and write out speed on timer*/
+
         // Use this for initialization
         void Start()
         {
@@ -27,6 +32,10 @@ namespace SteeringNamespace
             //seek = GetComponent<DynoSeek>();
             arrive = GetComponent<DynoArrive>();
             align = GetComponent<DynoAlign>();
+			/*record and write out speed on timer*/
+			StartTime = Time.time;
+			FileName = "DynoTimer.txt";
+			System.IO.File.WriteAllText (@"C:\Grad School\AI\A1\" + FileName ,"0");
         }
 
         // Update is called once per frame
@@ -45,6 +54,15 @@ namespace SteeringNamespace
             //Debug.Log(kso.position);
             transform.position = new Vector3(kso.position.x, transform.position.y, kso.position.z);
             transform.rotation = Quaternion.Euler(0f, kso.orientation * Mathf.Rad2Deg, 0f);
+
+			/*record and write out speed on timer*/
+			string t = (Time.time - StartTime).ToString();
+
+			using (System.IO.StreamWriter file = 
+				       new System.IO.StreamWriter (@"C:\Grad School\AI\A1\" + FileName, true)) 
+			{
+				file.WriteLine (t + " | " + char_RigidBody.getVelocity().ToString() );
+			}
         }
     }
 }
