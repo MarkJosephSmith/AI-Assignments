@@ -25,9 +25,15 @@ namespace SteeringNamespace
 		private string FileName;
 		/*END record and write out speed on timer*/
 
+		/*Drop a bread crumb*/
+		public GameObject crumb;
+		private float AppearanceRate;
+		private float LastDroppedCrumb;
+		/*END Drop a bread crumb*/
+
         // Use this for initialization
         void Start()
-        {
+        { 
             char_RigidBody = GetComponent<Kinematic>();
             //seek = GetComponent<DynoSeek>();
             arrive = GetComponent<DynoArrive>();
@@ -36,6 +42,8 @@ namespace SteeringNamespace
 			StartTime = Time.time;
 			FileName = "DynoTimer.txt";
 			System.IO.File.WriteAllText (@"C:\Grad School\AI\A1\" + FileName ,"0");
+			AppearanceRate = 0.1f;
+			LastDroppedCrumb = 0.0f;
         }
 
         // Update is called once per frame
@@ -63,6 +71,23 @@ namespace SteeringNamespace
 			{
 				file.WriteLine (t + " | " + char_RigidBody.getVelocity().ToString() );
 			}
+
+			DropCrumb (char_RigidBody.getVelocity());
         }
+
+		void DropCrumb(Vector3 scaler)
+		{
+			if (AppearanceRate < LastDroppedCrumb) 
+			{
+				LastDroppedCrumb = 0.0f;
+				GameObject toDrop = Instantiate (crumb, new Vector3 (transform.position.x, 0, transform.position.z), transform.rotation);
+				toDrop.transform.localScale = toDrop.transform.localScale + (new Vector3 (0, ( (Mathf.Abs( scaler.x)) + (Mathf.Abs( scaler.z))), 0));
+			} 
+			else 
+			{
+				LastDroppedCrumb = LastDroppedCrumb + (Time.time - LastDroppedCrumb);
+			}
+		}
+
     }
 }
