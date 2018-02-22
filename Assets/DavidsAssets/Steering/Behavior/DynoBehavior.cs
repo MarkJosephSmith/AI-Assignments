@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GoalNamespace;
 
 namespace SteeringNamespace
 {
@@ -42,6 +43,10 @@ namespace SteeringNamespace
 		public float UpperBoundZ;
 		public float LowerBoundZ;
 
+		/*for returning to safe zone*/
+		private Goal SafeZoneGoalScript;
+		public GameObject SafeZone;
+
 
 
         // Use this for initialization
@@ -67,6 +72,10 @@ namespace SteeringNamespace
 			LowerBoundX = -175;
 			UpperBoundZ = 40;
 			LowerBoundZ = -10;
+
+			SafeZoneGoalScript = GetComponent<Goal>();
+
+
 
         }
 
@@ -165,12 +174,28 @@ namespace SteeringNamespace
 			return true;
 		}
 
-
-		/*Worry about this later
-		public void SetGoal()
+		void OnTriggerEnter(Collider other)
 		{
+			if (other.gameObject.tag == "Scary") 
+			{
+				Debug.Log ("hit scarry");
+				//char_RigidBody.setVelocity(char_RigidBody.getVelocity () * -1);
+				GoToSafeZone();
+
+
+			}
 		}
-		*/
+
+
+
+		public void GoToSafeZone()
+		{
+			bHasGoal = true;
+			char_RigidBody.setVelocity (Vector3.zero);
+			SafeZoneGoalScript.setGoal (SafeZone);
+
+		}
+
 
     }
 }
