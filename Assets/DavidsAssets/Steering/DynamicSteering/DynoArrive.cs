@@ -71,5 +71,33 @@ namespace SteeringNamespace
 
             return ds;
         }
+
+		public DynoSteering getSteering(Vector3 i_GoalLocation)
+		{
+
+			ds = new DynoSteering();
+			//goal = goalObject.getGoal();
+
+			direction = i_GoalLocation - transform.position;
+			distance = direction.magnitude;
+
+			targetSpeed = sp.MAXSPEED;
+
+			targetVelocity = direction;
+			targetVelocity.Normalize();
+			targetVelocity = targetVelocity * targetSpeed;
+
+			ds.force = targetVelocity - charRigidBody.getVelocity();
+			ds.force = ds.force / time_to_target;
+
+			if (ds.force.magnitude > sp.MAXACCEL)
+			{
+				ds.force.Normalize();
+				ds.force = ds.force * sp.MAXACCEL;
+			}
+			ds.torque = 0f;
+
+			return ds;
+		}
     }
 }

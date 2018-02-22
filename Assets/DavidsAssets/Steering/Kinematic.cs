@@ -16,6 +16,11 @@ namespace SteeringNamespace
         private float height;
         private KinematicSteeringOutput steering;
 
+		//Wander variables
+		//private float DistanceAhead = 10;
+		//private float WanderCircleRadius = 5;
+
+
         // Use this for initialization
         void Start()
         {
@@ -25,6 +30,7 @@ namespace SteeringNamespace
             velc = new Vector3(0f, 0f, 0f);
             rotation = 0f;
             orientation = 0f;
+			//wanderer = new Wander();
         }
 
         // Update is called once per frame
@@ -33,8 +39,11 @@ namespace SteeringNamespace
 
             steering = new KinematicSteeringOutput();
 
+			//perform wander behavior
+
+
             // make Updates
-            position += velc * time;
+			position += (velc) * time;
             orientation += rotation * time;
 
             velc += ds.force * time;
@@ -115,5 +124,7 @@ namespace SteeringNamespace
         {
             return (float)(Random.Range(0f, 1f) - Random.Range(0f, 1f));
         }
+
+
     }
 }

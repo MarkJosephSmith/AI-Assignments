@@ -84,5 +84,40 @@ namespace SteeringNamespace
             return ds;
         }
 
+		// Update is called once per frame
+		public DynoSteering getSteering(Vector3 i_GoalLocation)
+		{
+			//goal = goalObject.getGoal();
+
+			ds = new DynoSteering();
+			//goal.position - transform.position;
+			targetOrientation = charRigidBody.getNewOrientation(i_GoalLocation - transform.position);
+			//rotation = goal.eulerAngles;
+			rotation = targetOrientation - charRigidBody.getOrientation();
+			rotation = Kinematic.mapToRange(rotation);
+			rotationSize = Mathf.Abs(rotation);
+
+
+			targetRotation = sp.MAXROTATION;
+
+
+
+			// Final target rotation combines speed (already in variable) with rotation direction
+			targetRotation = targetRotation * rotation / rotationSize;
+
+			ds.torque = targetRotation - charRigidBody.getRotation();
+			ds.torque = ds.torque / time_to_target;
+
+			angularAcceleration = Mathf.Abs(ds.torque);
+
+			if (angularAcceleration > sp.MAXANGULAR)
+			{
+				ds.torque = ds.torque / angularAcceleration;
+				ds.torque = ds.torque * sp.MAXANGULAR;
+			}
+
+			return ds;
+		}
+
     }
 }
