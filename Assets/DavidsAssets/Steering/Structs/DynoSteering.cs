@@ -15,7 +15,7 @@ namespace SteeringNamespace
 		public Vector3 getWanderGoal(Vector3 i_Vel, Vector3 i_Pos, float i_ToCenter, float i_Rad) //, bool i_ReverseDirection = false)
 		{
 			Vector3 normVel = i_Vel;
-			if (normVel == Vector3.zero) 
+			if ( Mathf.Abs(i_Vel.x) + Mathf.Abs(i_Vel.z) < 0.5 ) 
 			{
 				normVel = new Vector3 (1, 0, 0);
 			} 

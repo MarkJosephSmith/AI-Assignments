@@ -184,6 +184,12 @@ namespace SteeringNamespace
 
 
 			}
+			else if (other.gameObject.tag == "Safe") 
+			{
+				Debug.Log ("hit safe");
+				bHasGoal = false;
+				char_RigidBody.setVelocity (Vector3.zero);
+			}
 		}
 
 
